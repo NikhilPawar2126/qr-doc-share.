@@ -1,26 +1,44 @@
 const express = require("express");
-const cors = require("cors");
+const fs = require("fs");
 const path = require("path");
-const dotenv = require("dotenv");
+require("dotenv").config();
 
-dotenv.config();
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static client files
+// Serve static files (frontend)
 app.use(express.static(path.join(__dirname, "../client")));
 
-// Default route
-app.get("/", (req, res) => {
+// Get all users
+app.get("/api/users", (req, res) => {
+  try {
+    const users = JSON.parse(fs.readFileSync(path.join(__dirname, "users.json")));
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error reading users" });
+  }
+});
+
+// Get all sessions
+app.get("/api/sessions", (req, res) => {
+  try {
+    const sessions = JSON.parse(fs.readFileSync(path.join(__dirname, "sessions.json")));
+    res.json(sessions);
+  } catch (error) {
+    res.status(500).json({ message: "Error reading sessions" });
+  }
+});
+
+// Default route (homepage)
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/index.html"));
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
