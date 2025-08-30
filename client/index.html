@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Doc Share - Welcome</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="logo">QR DocShare</div>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Welcome to <span class="highlight">QR DocShare</span></h1>
+      <p>Securely share your documents with password-protected QR codes.<br>
+      Simplify access across any device.</p>
+      <a href="signup.html" class="btn-link">Get Started</a>
+    </div>
+
+    <div class="login-box">
+      <form id="loginForm">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username" required />
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required />
+          <i class="fa-solid fa-eye" id="togglePassword"></i>
+        </div>
+        <button type="submit">Login</button>
+        <p class="signup-text">Don't have an account? <a href="signup.html">Sign Up</a></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  
+  <script>
+    console.log("✅ html script.js loaded");
+
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 60, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.2, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.1, width: 1 },
+        move: { enable: true, speed: 1 }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" }
+        },
+        modes: {
+          grab: { distance: 140, line_linked: { opacity: 0.5 } },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
+

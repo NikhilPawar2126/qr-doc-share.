@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Doc Share - Sign Up</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="logo">QR DocShare</div>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Create your <span class="highlight">QR DocShare</span> Account</h1>
+      <p>Start sharing your documents securely with password-protected QR codes.</p>
+      <a href="index.html" class="btn-link">Back to Login</a>
+    </div>
+
+    <div class="login-box">
+      <form id="signupForm">
+        <h2>Sign Up</h2>
+
+        <input type="text" id="name" name="name" placeholder="Full Name" required />
+        <input type="text" id="username" name="username" placeholder="Username" required />
+        <input type="email" id="email" name="email" placeholder="Email" required autocomplete="username" />
+
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password" />
+          <i class="fa-solid fa-eye" id="togglePassword"></i>
+        </div>
+
+        <div class="password-wrapper">
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required autocomplete="new-password" />
+          <i class="fa-solid fa-eye" id="toggleConfirmPassword"></i>
+        </div>
+
+        <button type="submit">Register</button>
+        <p class="signup-text">Already have an account? <a href="index.html">Login</a></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="signup.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 60, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.2, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.1, width: 1 },
+        move: { enable: true, speed: 1 }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" }
+        },
+        modes: {
+          grab: { distance: 140, line_linked: { opacity: 0.5 } },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>

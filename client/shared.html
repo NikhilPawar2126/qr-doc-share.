@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure File Access</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #eef2f3, #8e9eab);
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+      font-size: 2.5rem;
+      animation: fadeInDown 1s ease-out;
+    }
+    .card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      margin: 1rem 0;
+      width: 100%;
+      max-width: 600px;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    .card a {
+      color: #3498db;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .card .date {
+      font-size: 0.85rem;
+      color: #7f8c8d;
+      margin-top: 0.5rem;
+    }
+    #status {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    #passwordPrompt {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    #passwordPrompt input {
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-right: 0.5rem;
+    }
+    #passwordPrompt button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #3498db;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #passwordPrompt button:hover {
+      background-color: #2980b9;
+    }
+    .error {
+      color: #e74c3c;
+      margin-top: 1rem;
+    }
+    @keyframes fadeInDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🔐 Secure File Access</h1>
+  <div id="status">Validating document...</div>
+  <div id="passwordPrompt" style="display:none">
+    <p>Enter password to unlock document:</p>
+    <input type="password" id="pwInput" placeholder="Password">
+    <button onclick="submitPassword()">Unlock</button>
+    <div id="errorMsg" class="error"></div>
+  </div>
+  <div id="fileAccess" style="display:none"></div>
+
+  <script>
+    const isLocal = location.hostname === "localhost";
+    const API = isLocal ? "http://localhost:5501" : "https://qrshare-cip8.onrender.com";
+
+    const params = new URLSearchParams(window.location.search);
+    const docId = params.get("docId");
+    console.log("📦 docId from URL:", docId);
+
+     if (!docId) {
+     document.getElementById('status').innerText = '❌ Missing or invalid document ID';
+     throw new Error('Missing docId in URL');
+     }
+
+    let matchedFile = null;
+
+    async function fetchFileMeta() {
+      try {
+          const res = await fetch(`${API}/public/${docId}`);
+        if (!res.ok) {
+          document.getElementById('status').innerText = '❌ No matching document found';
+          return;
+        }
+        const data = await res.json();
+        matchedFile = data;
+
+        document.getElementById('status').innerText = '🔒 Password required';
+        document.getElementById('passwordPrompt').style.display = 'block';
+      } catch (err) {
+        console.error(err);
+        document.getElementById('status').innerText = '❌ Server error';
+      }
+    }
+
+    async function submitPassword() {
+      const pw = document.getElementById('pwInput').value;
+      if (!pw) return;
+
+      const res = await fetch(`${API}/verify-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ docId: matchedFile.docId, password: pw })
+      });
+
+      const data = await res.json();
+      if (!data.success) {
+        document.getElementById('errorMsg').innerText = '❌ Invalid password';
+        return;
+      }
+
+      document.getElementById('passwordPrompt').style.display = 'none';
+      document.getElementById('status').innerText = '✅ Access granted';
+      document.getElementById('fileAccess').style.display = 'block';
+      document.getElementById('fileAccess').innerHTML = `
+        <div class="card">
+          <a href="${matchedFile.downloadUrl}" target="_blank">${matchedFile.originalName}</a>
+          <div class="date">Uploaded on ${new Date(matchedFile.createdAt).toLocaleString()}</div>
+        </div>
+      `;
+    }
+
+    fetchFileMeta();
+  </script>
+</body>
+</html>

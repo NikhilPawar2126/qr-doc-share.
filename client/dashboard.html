@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR DocShare - Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">QR DocShare</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#upload">Upload</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="index.html" id="logout">Logout</a></li>
+    </ul>
+  </nav>
+
+  <section id="home" class="section">
+    <h1>Welcome <span id="username">User</span> 👋</h1>
+    <p class="subtitle">Manage, share, and protect your documents with ease.</p>
+
+    <div class="card-grid">
+      <div class="card" id="card-docs">
+        <div class="card-header" onclick="toggleCard('docs')">
+          <h2><i class="fa-solid fa-folder"></i> My Documents</h2>
+          <i class="fa-solid fa-chevron-down rotate-icon" id="icon-docs"></i>
+        </div>
+        <div class="card-content active" id="content-docs">
+          <div class="card-search">
+            <input type="text" id="searchInput" placeholder="Search files...">
+            <input type="date" id="dateFilter" />
+          </div>
+          <div id="fileList" class="file-list">Loading...</div>
+        </div>
+      </div>
+
+      <div class="card" id="card-qr">
+        <div class="card-header" onclick="toggleCard('qr')">
+          <h2><i class="fa-solid fa-qrcode"></i> Shared QR</h2>
+          <i class="fa-solid fa-chevron-down rotate-icon" id="icon-qr"></i>
+        </div>
+        <div class="card-content" id="content-qr">
+          <div id="qrPreview">Generating...</div>
+        </div>
+      </div>
+
+      <div class="card" id="card-features">
+        <div class="card-header" onclick="toggleCard('features')">
+          <h2><i class="fa-solid fa-lightbulb"></i> Roadmap</h2>
+          <i class="fa-solid fa-chevron-down rotate-icon" id="icon-features"></i>
+        </div>
+        <div class="card-content" id="content-features">
+          <ul class="feature-list">
+            <li>🔒 Passwordless QR Access (coming soon)</li>
+            <li>📊 Usage Analytics</li>
+            <li>🧠 AI Tagging System</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="upload" class="section">
+    <h2>Upload New Document</h2>
+    <form id="uploadForm">
+      <div class="drop-area" id="dropArea">
+        <p><i class="fa-solid fa-cloud-arrow-up"></i> Drop file here or click to browse</p>
+        <input type="file" id="fileInput" name="file" required style="display: none;" />
+      </div>
+      <div id="fileNameDisplay" style="margin: 0.5rem 0; color: #ffce00;"></div>
+      <button type="submit">Upload</button>
+    </form>
+    <div id="qrPreviewUpload" class="qr-upload-preview"></div>
+  </section>
+
+  <section id="services" class="section services-section">
+    <h2>What We Offer</h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <i class="fa-solid fa-file-shield"></i>
+        <h3>Secure Docs</h3>
+        <p>All uploads are password-protected and encrypted.</p>
+      </div>
+      <div class="service-card">
+        <i class="fa-solid fa-qrcode"></i>
+        <h3>Smart QR</h3>
+        <p>Every upload gets a unique shareable QR code.</p>
+      </div>
+      <div class="service-card">
+        <i class="fa-solid fa-cloud-arrow-down"></i>
+        <h3>Instant Access</h3>
+        <p>Scan, verify, and download in seconds.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Your Name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Your Email" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea name="message" id="message" placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <div id="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script src="dashboard.js"></script>
+
+  <script>
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".file-menu")) {
+        document.querySelectorAll(".popup-menu").forEach(el => el.classList.add("hidden"));
+      }
+    });
+  </script>
+</body>
+
+</html>

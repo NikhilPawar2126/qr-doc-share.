@@ -1,0 +1,13 @@
+.env/
+# Ignore Python virtual environment
+.venv/
+
+# Ignore Node modules
+node_modules/
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore logs and temp files
+*.log
+__pycache__/

@@ -1,0 +1,396 @@
+/* File: client/dashboard.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffce00;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.navbar ul li a:hover {
+  color: #ffce00;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #ffce00;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #eee;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  flex: 1;
+  min-width: 300px;
+  max-width: 33%;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffce00;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rotate-icon {
+  transition: transform 0.3s ease;
+}
+
+.card-content {
+  margin-top: 1rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.card-content.active {
+  display: flex;
+  max-height: 1000px;
+}
+
+#searchInput, #dateFilter {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.file-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.file-item {
+  background: #2f3e50;
+  color: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.file-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+}
+
+.file-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 1rem;
+}
+
+.file-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #fff;
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+
+.file-item .date {
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-top: 0.3rem;
+}
+
+.file-menu {
+  position: relative;
+}
+
+/* .popup-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #222;
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  padding: 0.5rem;
+  display: none;
+  flex-direction: column;
+  z-index: 9999;
+  min-width: 120px;
+} */
+ .popup-menu {
+  display: none;
+  z-index: 9999;
+}
+
+.popup-menu button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.popup-menu button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.popup-menu.hidden {
+  display: none !important;
+}
+
+.dots {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #ffce00;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+#uploadForm {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.drop-area {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border: 2px dashed #ffce00;
+  border-radius: 10px;
+  text-align: center;
+  color: #ccc;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background 0.3s;
+}
+
+.drop-area.drag-over {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+button {
+  width: 100%;
+  padding: 0.9rem;
+  background: #ffce00;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #000;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+#qrPreview {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+#qrPreview img {
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+#qrPreview .button-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 12px;
+}
+
+#qrPreview .button-row button {
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+#qrPreview .share-btn {
+  background: #2fb69b;
+  color: #fff;
+}
+
+#qrPreview .pdf-btn {
+  background: #0984e3;
+  color: #fff;
+}
+
+.services-section .service-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.service-card {
+  flex: 1;
+  min-width: 260px;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.service-card i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #ffce00;
+}
+
+#contactForm {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+#contactForm input,
+#contactForm textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+#contactForm textarea {
+  min-height: 120px;
+}
+
+#toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  z-index: 999;
+  display: none;
+}
+
+#toast.success { background: #2ecc71; }
+#toast.error { background: #e74c3c; }
+
+@media (max-width: 900px) {
+  .card-grid {
+    flex-direction: column;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+}
+
+#dropArea p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
